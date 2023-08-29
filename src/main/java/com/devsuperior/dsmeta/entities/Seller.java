@@ -20,10 +20,10 @@ public class Seller {
 	private String name;
 	private String email;
 	private String phone;
-	
+
 	@OneToMany(mappedBy = "seller")
 	private List<Sale> sales = new ArrayList<>();
-	
+
 	public Seller() {
 	}
 
