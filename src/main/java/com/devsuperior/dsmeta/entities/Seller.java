@@ -34,6 +34,7 @@ public class Seller {
 		this.phone = phone;
 	}
 
+	
 	public Long getId() {
 		return id;
 	}

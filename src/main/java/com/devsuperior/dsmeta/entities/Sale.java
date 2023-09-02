@@ -22,10 +22,29 @@ public class Sale {
 	private Integer deals;
 	private Double amount;
 	private LocalDate date;
-
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "seller_id")
 	private Seller seller;
+	
+	
+	
+	public Sale(LocalDate date,Double amount ,Seller seller ) {
+		super();
+		this.amount = amount;
+		this.date = date;
+		this.seller = seller;
+		
+	
+	}
+	
+	public Sale(LocalDate minDate,LocalDate maxDate) {
+		super();
+		this.date = minDate;
+		this.date = maxDate;
+	
+	}
 
 	public Sale() {
 	}
@@ -70,6 +89,8 @@ public class Sale {
 		this.date = date;
 	}
 
+	
+	
 	public Seller getSeller() {
 		return seller;
 	}
