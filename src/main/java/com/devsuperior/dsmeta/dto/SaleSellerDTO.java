@@ -3,23 +3,21 @@ package com.devsuperior.dsmeta.dto;
 import java.time.LocalDate;
 
 import com.devsuperior.dsmeta.entities.Sale;
-import com.devsuperior.dsmeta.entities.Seller;
 
 public class SaleSellerDTO {
 	private Long id;
 	private Double amount;
 	private LocalDate date;
-	private String name;
-	
-	private Seller seller;
+	private String sellerName;
 
+	private SellerDTO sellerdto;
 
-	public SaleSellerDTO(Long id, Double amount, LocalDate date, Seller seller) {
+	public SaleSellerDTO(Long id, Double amount, LocalDate date , SellerDTO sellerdto) {
 		super();
 		this.id = id;
 		this.amount = amount;
 		this.date = date;
-		this.seller = seller;
+		this.sellerdto = sellerdto;
 	}
 	
 	
@@ -27,7 +25,7 @@ public class SaleSellerDTO {
 		this.id = entity.getId();
 		this.amount = entity.getAmount();
 		this.date = entity.getDate();
-		this.name = entity.getSeller().getName();
+		this.sellerName = entity.getSeller().getName();
 	}
 	
 	
@@ -49,7 +47,12 @@ public class SaleSellerDTO {
 
 
 	public String getName() {
-		return name;
+		return sellerName;
+	}
+
+
+	public SellerDTO getSellerdto() {
+		return sellerdto;
 	}
 	
 	

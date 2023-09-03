@@ -3,8 +3,8 @@ package com.devsuperior.dsmeta.repositories;
 
 
 import java.time.LocalDate;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,10 +20,14 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 	@Query( value ="SELECT obj FROM Sale obj JOIN FETCH obj.seller seller ",
 			countQuery= "SELECT COUNT(obj) FROM Sale obj JOIN obj.seller seller "
 			+ " WHERE UPPER(obj.seller.name) LIKE UPPER(CONCAT('%', :name , '%'))"
-			+ " AND obj.date >=:minDate AND obj.date<=:maxDate ORDER BY obj.date ASC")
+			+ " AND obj.date >= :minDate AND obj.date <= :maxDate ORDER BY obj.date ASC")
 			
 				
 	
-	List<Sale>searchReport(LocalDate minDate, LocalDate maxDate, String name,Pageable pageable);
+	Page<Sale>searchReport(LocalDate minDate,
+	       LocalDate maxDate,
+	       String name,
+	        Pageable pageable
+	      );
 	
 }

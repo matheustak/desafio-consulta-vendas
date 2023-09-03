@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,17 +27,23 @@ public class SaleService {
 		Sale entity = result.get();
 		return new SaleMinDTO(entity);
 	}
-	 public List<SaleSellerDTO> searchReport(String minDate, String maxDate, String name,Pageable pageable) {
-		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		 LocalDate min = LocalDate.parse(minDate, formatter);
-		 LocalDate max = LocalDate.parse(maxDate, formatter);
 	
-		 	
-		  		 	List<Sale> result = repository.searchReport(min,max,name,pageable);
-		  		 	
-		  		 	return result.stream().map(Sale -> new SaleSellerDTO(Sale)).collect(Collectors.toList());
+	
+	  public Page<Sale> searchReport(String minDateStr, String maxDateStr, String name,Pageable pageable) {
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		 LocalDate minDate = LocalDate.parse(minDateStr, formatter);
+		 LocalDate maxDate = LocalDate.parse(maxDateStr, formatter);
+		
+		 
+	
+		
+		
+		return repository.searchReport(minDate, maxDate, name, pageable);
 		  
 	 }
+	 
+	 
+	
 
 		 
 }
