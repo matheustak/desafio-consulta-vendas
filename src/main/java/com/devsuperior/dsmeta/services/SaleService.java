@@ -59,7 +59,7 @@ public class SaleService {
 		 Page<SaleSellerProjection> entity = repository.search1(minDate, maxDate, pageable);
 		
 		
-		Page<SaleMinDTO> dto = entity.map(x-> new SaleMinDTO(x.getName(),x.getAmount()));
+		Page<SaleMinDTO> dto = entity.map(x-> new SaleMinDTO(x.getsellerName(),x.gettotalAmount()));
 		return dto;
 	
 		

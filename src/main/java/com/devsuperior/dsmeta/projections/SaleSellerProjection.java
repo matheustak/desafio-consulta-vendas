@@ -8,7 +8,7 @@ package com.devsuperior.dsmeta.projections;
  *
  */
 public interface SaleSellerProjection {
-	String getName();
-	Double getAmount();
+	String getsellerName();
+	Double gettotalAmount();
 	
 }
