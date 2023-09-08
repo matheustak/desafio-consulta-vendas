@@ -1,6 +1,7 @@
 package com.devsuperior.dsmeta.services;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class SaleService {
 	private SaleRepository repository;
 	
 
-	
+	//BUSCA POR ID
 	public SaleSellerDTO findById(Long id) {
 		Optional<Sale> result = repository.findById(id);
 		Sale entity = result.get();
@@ -30,6 +31,7 @@ public class SaleService {
 	}
 	
 	
+	// BUSCA POR PARAM VENDAS
 	  public Page<SaleSellerDTO> searchReport(String minDateStr, String maxDateStr, String name,Pageable pageable) {
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		 LocalDate minDate = LocalDate.parse(minDateStr, formatter);
@@ -44,11 +46,33 @@ public class SaleService {
 
 		  
 	 }
+	  
 	 
+	  public Page<SaleSellerDTO> searchReport(Pageable pageable) {
+			 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			 LocalDate currentDate = LocalDate.now();
+
+			// Calcule a data de início (12 meses atrás)
+			LocalDate atualDate = currentDate.minus(Period.ofMonths(12));
+
+			// Defina a data de término como a data atual
+			LocalDate mesdozeDate = currentDate;
+			
+			 
+			 
+			Page<Sale> entity = repository.searchReport(atualDate, mesdozeDate, pageable);
+			
+			Page<SaleSellerDTO> dto = entity.map(x->new SaleSellerDTO(x));
+			return dto;
+
+			  
+		 }
+		  
+		 
 	 
 	 
 	  
-
+	  // BUSCA POR PARAM VENDEDORES
 	  public Page<SaleMinDTO> search1(String minDateStr, String maxDateStr,Pageable pageable) {
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		 LocalDate minDate = LocalDate.parse(minDateStr, formatter);

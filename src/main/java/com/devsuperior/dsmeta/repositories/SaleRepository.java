@@ -41,24 +41,40 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 			"AND obj.date >= :minDate AND obj.date <= :maxDate ORDER BY obj.date ASC",
 			countQuery = "SELECT COUNT(obj) FROM Sale obj JOIN obj.seller seller " +
 					"WHERE UPPER(obj.seller.name) LIKE UPPER(CONCAT('%', :name, '%')) " +
-					"AND obj.date >= :minDate AND obj.date <= :maxDate")
+					"AND obj.date >= :minDate AND obj.date <= :maxDate ")
 				
-	/*@Query(value = "SELECT obj "
-            + "FROM Sale obj "
-            + "JOIN FETCH obj.seller "
-            + "WHERE obj.date BETWEEN :minDate AND :maxDate "
-            + "AND UPPER(obj.seller.name) LIKE UPPER(CONCAT('%', :name, '%')) ",
-            countQuery = "SELECT COUNT(obj) "
-                    + "FROM Sale obj "
-                    + "WHERE obj.date BETWEEN :minDate AND :maxDate "
-                    + "AND UPPER(obj.seller.name) LIKE UPPER(CONCAT('%', :name, '%'))")*/
-   
+	
 	
 	Page<Sale>searchReport(LocalDate minDate,
 	       LocalDate maxDate,
 	       String name,
 	        Pageable pageable
 	      );
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@Query(value = "SELECT obj FROM Sale obj JOIN FETCH obj.seller seller " +
+			"WHERE obj.date >= :atualDate AND obj.date <= :mesdozeDate ORDER BY obj.date ASC",
+			countQuery = "SELECT COUNT(obj) FROM Sale obj JOIN obj.seller seller " +
+					"WHERE obj.date >= :atualDate AND obj.date <= :mesdozeDate ")
+					
+				
+	
+	
+	Page<Sale>searchReport(LocalDate atualDate,
+	       LocalDate mesdozeDate,
+	        Pageable pageable
+	      );
+	
+	
+	
+	
 	
 	
 	

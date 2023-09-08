@@ -1,5 +1,8 @@
 package com.devsuperior.dsmeta.controllers;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,14 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SaleSellerDTO;
-import com.devsuperior.dsmeta.projections.SaleSellerProjection;
 import com.devsuperior.dsmeta.services.SaleService;
 
 @RestController
 @RequestMapping(value = "/sales")
 public class SaleController {
 
-
+	
 	@Autowired
 	private SaleService service;
 
@@ -29,7 +31,7 @@ public class SaleController {
 		return ResponseEntity.ok(dto);
 	}
 
-	@GetMapping(value = "/report")
+	@GetMapping(value = "/report", params = "name")
 	public ResponseEntity<Page<SaleSellerDTO>> searchReport(@RequestParam(name = "minDate", defaultValue = "") String minDate,
 	        @RequestParam(name = "maxDate", defaultValue = "") String maxDate,
 	        @RequestParam(name = "name", defaultValue = "") String name ,
@@ -45,6 +47,23 @@ public class SaleController {
 		
 		return ResponseEntity.ok(dto);
 	}
+	
+
+	@GetMapping(value = "/report")
+	public ResponseEntity<Page<SaleSellerDTO>> searchReport(
+	        Pageable pageable){
+		
+	
+		
+		Page<SaleSellerDTO> dto = service.searchReport(pageable);
+		
+		
+		
+		
+		
+		return ResponseEntity.ok(dto);
+	}
+	
 	
 	
 	@GetMapping(value = "/summary")
