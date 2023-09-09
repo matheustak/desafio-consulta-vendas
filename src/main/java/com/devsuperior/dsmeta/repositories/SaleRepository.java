@@ -31,7 +31,21 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 	
 	
 	
+	@Query(nativeQuery = true, value = "SELECT s.name AS sellerName,  SUM(sale.amount) AS totalAmount "
+	        + "FROM tb_sales sale "
+	        + "JOIN tb_seller s ON sale.seller_id = s.id "
+	        + "WHERE sale.date >= :minDate AND sale.date <= :maxDate "
+	        + "GROUP BY s.name",
+	        countQuery = "SELECT s.name AS sellerName ,  SUM(sale.amount) AS totalAmount "
+	                + "FROM tb_sales sale "
+	                + "JOIN tb_seller s ON sale.seller_id = s.id "
+	                + "WHERE sale.date >= :minDate AND sale.date <= :maxDate "
+	                + "GROUP BY s.name")
 	
+	
+	Page<SaleSellerProjection>search2(LocalDate minDate,
+		       LocalDate maxDate, 
+		       Pageable pageable);
 	
 	
 	

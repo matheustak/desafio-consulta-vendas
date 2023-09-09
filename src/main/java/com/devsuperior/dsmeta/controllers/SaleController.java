@@ -1,8 +1,5 @@
 package com.devsuperior.dsmeta.controllers;
 
-import java.time.LocalDate;
-import java.time.Period;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,7 +63,7 @@ public class SaleController {
 	
 	
 	
-	@GetMapping(value = "/summary")
+	@GetMapping(value = "/summary", params ="minDate")
 	public ResponseEntity<Page<SaleMinDTO>> search1(@RequestParam(name = "minDate", defaultValue = "") String minDate,
 	        @RequestParam(name = "maxDate", defaultValue = "") String maxDate,
 	        Pageable pageable){
@@ -81,6 +78,26 @@ public class SaleController {
 		
 		return ResponseEntity.ok(dto);
 	}
+	
+	
+
+
+	@GetMapping(value = "/summary")
+	public ResponseEntity<Page<SaleMinDTO>> search1(
+	        Pageable pageable){
+		
+	
+		
+		Page<SaleMinDTO> dto = service.search1(pageable);
+		
+		
+		
+		
+		
+		return ResponseEntity.ok(dto);
+	}
+	
+	
 	
 	
 

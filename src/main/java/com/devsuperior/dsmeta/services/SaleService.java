@@ -48,8 +48,7 @@ public class SaleService {
 	 }
 	  
 	 
-	  public Page<SaleSellerDTO> searchReport(Pageable pageable) {
-			 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	  public Page<SaleSellerDTO> searchReport(Pageable pageable) {	
 			 LocalDate currentDate = LocalDate.now();
 
 			// Calcule a data de início (12 meses atrás)
@@ -78,8 +77,12 @@ public class SaleService {
 		 LocalDate minDate = LocalDate.parse(minDateStr, formatter);
 		 LocalDate maxDate = LocalDate.parse(maxDateStr, formatter);
 		
-		 
-		 
+		 if(minDateStr == "") {
+			LocalDate currentDate = LocalDate.now();
+			 minDate = currentDate.minus(Period.ofMonths(12));
+			 maxDate = currentDate; 
+				
+		 }
 		 Page<SaleSellerProjection> entity = repository.search1(minDate, maxDate, pageable);
 		
 		
@@ -88,6 +91,24 @@ public class SaleService {
 	
 		
 	 }
+	  
+	  
+	  public Page<SaleMinDTO> search1(Pageable pageable) {
+			
+	
+				LocalDate currentDate = LocalDate.now();
+				LocalDate minDate = currentDate.minus(Period.ofMonths(12));
+				LocalDate maxDate = currentDate; 
+	
+			 Page<SaleSellerProjection> entity = repository.search1(minDate, maxDate, pageable);
+			
+			
+			Page<SaleMinDTO> dto = entity.map(x-> new SaleMinDTO(x.getsellerName(),x.gettotalAmount()));
+			return dto;
+		
+			
+		 }
+		  
 	 
 	
 
